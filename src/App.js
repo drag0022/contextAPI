@@ -1,25 +1,35 @@
-import logo from './logo.svg';
 import './App.css';
+import Head from './Head';
+import Footer from './Footer.js';
+import { useState } from 'react';
+import ThemeContext from './ThemeContext';
+import themes from './themes.js';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App() {
+	const [theme, setTheme] = useState(themes.Aqua);
+	//create a value to put into our context object
+
+	//add a function to change the context object
+	function toggleTheme() {
+		//switch between light and dark
+		console.log(
+			'comparing',
+			theme.backgroundColor,
+			themes.Space.backgroundColor
+		);
+		const newTheme =
+			theme.backgroundColor === themes.Space.backgroundColor
+				? themes.Aqua
+				: themes.Space;
+		setTheme(newTheme);
+	}
+
+	return (
+		<div className="App">
+			<ThemeContext.Provider value={[theme, toggleTheme]}>
+				<Head />
+				<Footer />
+			</ThemeContext.Provider>
+		</div>
+	);
 }
-
-export default App;
